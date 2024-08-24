@@ -79,9 +79,9 @@ def get_png_phantom_2d(name,shape=(512,512)):
 
 class phantom3d:
 
-    def get_phantom(self,type ='delta sphere',shape=(256,256,256),radius=1,name='default',pos=(0,0,0)):
+    def get_phantom(self,type ='delta sphere',shape=(256,256,256),radius=1,name='default',offset=(0,0,0)):
         if type == 'delta':
-            return get_sphere_phantom_3d(arg=type,shape = shape,radius=radius,pos=pos)
+            return get_sphere_phantom_3d(arg=type,shape = shape,radius=radius,offset=offset)
         elif type == 'double sphere':
             return get_sphere_phantom_3d(type,shape=shape,radius=radius)
         elif type == 'p':
@@ -99,9 +99,9 @@ class phantom3d:
             raise Exception('Error: unsupported type!')
 
     def __init__(self,type='delta',shape=(128,128),radius=1,name='dafault',pos=(0,0,0)):
-        self.data = self.get_phantom(type,shape,radius,name,pos=pos)
+        self.data = self.get_phantom(type,shape,radius,name,offset=pos)
 
-def get_sphere_phantom_3d(arg,shape,radius,pos):
+def get_sphere_phantom_3d(arg,shape,radius,offset):
     phantom = np.zeros(shape)
     if(arg == 'double sphere'):
         for i in range(shape[0]):
@@ -115,7 +115,7 @@ def get_sphere_phantom_3d(arg,shape,radius,pos):
         for i in range(shape[0]):
             for j in range(shape[1]):
                 for k in range(shape[2]):
-                    if np.sqrt((i - pos[0])**2 + (j - pos[1])**2 + (k - pos[2]) ** 2) < radius:
+                    if np.sqrt((i - offset[0])**2 + (j - offset[1])**2 + (k - offset[2]) ** 2) < radius:
                         phantom[i,j,k] = 1
                     else:
                         phantom[i,j,k] = 0

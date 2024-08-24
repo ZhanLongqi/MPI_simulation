@@ -1,4 +1,6 @@
 import numpy as np
+import os
+
 def __Compute_RowEnergy(A):
     M = A.shape[0]
     energy = np.zeros(M, dtype=np.double)
